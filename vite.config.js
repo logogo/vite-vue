@@ -1,73 +1,79 @@
+import { fileURLToPath, URL } from 'node:url';
 
-import { defineConfig } from 'vite'
-import  {  createVuePlugin  }  from  'vite-plugin-vue2'
-import { injectHtml } from 'vite-plugin-html'
+import { defineConfig, loadEnv } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vueSetupExtend from 'vite-plugin-vue-setup-extend';
+import { injectHtml } from 'vite-plugin-html';
 import postcssImport from 'postcss-import';
 import autoprefixer from 'autoprefixer';
-import requireTransform from 'vite-plugin-require-transform';
-
 import OptimizationPersist from 'vite-plugin-optimize-persist';
 import PkgConfig from 'vite-plugin-package-config';
-import path from 'path';
-const lifecycle = process.env.npm_lifecycle_event;
 
-export default defineConfig(({ command }) => {
-  let requireTransformConfig = '';
-
-  if (command === 'serve') { // 开发环境
-      requireTransformConfig = {
-          fileRegex: /.js$|.vue$/
-      };
-  }
-  if (command === 'build') { // 生产环境
-      requireTransformConfig = `/.js$|.vue$/, '_vite_plugin_require_transform_'`;
-  }
-
-  return {
-    css: {
-      postCss: {
-          plugins: [
-              postcssImport, // @import
-              autoprefixer // css3
-          ]
-        }
-    },
-    plugins: [
-      createVuePlugin(), // 兼容vue2
-      PkgConfig(), // 提高速度
-      OptimizationPersist(), // 提高速度
-      injectHtml({
-        injectData: {
-          title: "开始学习"
-        }
-      }),
-      requireTransform(requireTransformConfig) // 支持require
-    ],
-    resolve: {
-      extensions: ['.vue', '.js', '.scss'],
-      alias: {
-          '@': path.resolve(__dirname, './src')
-      }
-    },
-    build:{
-      outDir: lifecycle == 'dev' ? "dev" : "dist", // 根据命令打包
-      minify: 'terser',
-      terserOptions: {
-          compress: {
-              //生产环境时移除console
-              drop_console: lifecycle === 'build',
-              drop_debugger: lifecycle === 'build'
-          },
-      },
-      output: {
-        manualChunks: {
-          lodash: ['lodash'],
-          echarts: ['echarts']
+export default defineConfig(ConfigEnv => {
+    // console.log(ConfigEnv);{ mode: 'development', command: 'serve', ssrBuild: false }
+    const env = loadEnv(ConfigEnv.mode, process.cwd()); // 获取.env.XXX文件
+    const { mode } = ConfigEnv;
+    return {
+        plugins: [
+            vue(),
+            vueSetupExtend(),
+            injectHtml({
+                injectData: {
+                    title: 'plm'
+                }
+            }),
+            PkgConfig(),
+            OptimizationPersist()
+        ],
+        root: process.cwd(), // html地址
+        base: mode.command === 'serve' ? './' : env.VITE_PUBLIC_PATH, // base路径
+        resolve: {
+            alias: {
+                '@': fileURLToPath(new URL('./src', import.meta.url)) // @ 定向src
+            },
+            extensions: ['.vue', '.js']
         },
-        chunkFileNames: 'js/[name]-[hash].js',
-        entryFileNames: 'js/[name]-[hash].js',
-        assetFileNames: '[ext]/[name]-[hash].[ext]',
-      },
-    }
-  }
-})
+        server: {
+            host: '0.0.0.0',
+            port: 8080,
+            open: true
+        },
+        css: {
+            // css预处理器
+            preprocessorOptions: {
+                less: {
+                    charset: false
+                }
+            },
+            postCss: {
+                plugins: [
+                    postcssImport, // @import
+                    autoprefixer // css3
+                ]
+            }
+        },
+        build: {
+            outDir: 'dist',
+            sourcemap: false,
+            chunkSizeWarningLimit: 1500,
+            rollupOptions: {
+                output: {
+                    entryFileNames: `assets/[name].[hash].js`, // 入口文件拆分模式
+                    chunkFileNames: `assets/[name].[hash].js`, // 其他模块
+                    assetFileNames: `assets/[name].[hash].[ext]`, // 图片，css等其他资源
+                    compact: true,
+                    manualChunks: { // 抽出第三方包
+                        vue: ['vue', 'vue-router']
+                    }
+                }
+            },
+            minify: 'terser',
+            terserOptions: {
+                compress: {
+                    drop_console: process.env.npm_lifecycle_event === 'build',
+                    drop_debugger: process.env.npm_lifecycle_event === 'build'
+                }
+            }
+        }
+    };
+});

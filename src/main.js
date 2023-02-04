@@ -1,15 +1,12 @@
-import Vue from "vue"
-import './css/common.css'
-import App from "./App.vue"
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import components from '@/components/index';
+import directive from './directive/index';
+import store from './store';
+import './assets/main.less';
 
-import Component from "@/components/index";
-import Api from "@/api"
+const app = createApp(App);
+app.use(store).use(router).use(components).use(directive);
 
-Vue.use(Component)
-
-Vue.prototype.$api = Api
-
-new Vue({
-  el: "#app",
-  render: (h) => h(App)
-}).$mount();
+app.mount('#app');
