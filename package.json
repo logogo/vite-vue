@@ -9,9 +9,12 @@
     "eslint-fix": "yarn run lint && yarn run lint-style",
     "lint": "eslint --fix --ext .js,.vue src",
     "lint-style": "stylelint --fix src/**/*.{css,less}",
-    "prepare": "husky install && husky add .husky/pre-commit \"yarn run eslint\""
+    "build:analyze": "vite build --mode production",
+    "prepare": "husky install && husky add .husky/pre-commit \"yarn run imgZip\"",
+    "imgZip": "node ./imgZip.js"
   },
   "dependencies": {
+    "alife-logger": "^1.8.30",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
@@ -19,6 +22,7 @@
     "@vitejs/plugin-vue": "^4.0.0",
     "autoprefixer": "^10.4.13",
     "axios": "^1.3.1",
+    "element-plus": "^2.2.29",
     "eslint": "^8.33.0",
     "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-jsx": "^0.1.0",
@@ -31,6 +35,7 @@
     "postcss-html": "^1.5.0",
     "postcss-import": "^15.1.0",
     "postcss-less": "^6.0.0",
+    "rollup-plugin-visualizer": "^5.9.0",
     "stylelint": "^14.16.1",
     "stylelint-config-prettier": "^9.0.4",
     "stylelint-config-recommended-less": "^1.0.4",
@@ -40,6 +45,7 @@
     "stylelint-order": "^6.0.1",
     "terser": "^5.16.2",
     "unplugin-auto-import": "^0.13.0",
+    "unplugin-vue-components": "^0.23.0",
     "vite": "^4.0.0",
     "vite-plugin-html": "2.0.2",
     "vite-plugin-optimize-persist": "^0.1.2",

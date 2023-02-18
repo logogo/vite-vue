@@ -5,9 +5,12 @@ const user = {
     getUser() {
         return axios({
             url: 'settings/general',
-            method: 'get'
+            method: 'get',
+            params: {
+                name: '12'
+            }
         });
-    },
+    }
 };
 
 export default user;

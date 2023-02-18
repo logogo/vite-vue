@@ -8,23 +8,43 @@ import postcssImport from 'postcss-import';
 import autoprefixer from 'autoprefixer';
 import OptimizationPersist from 'vite-plugin-optimize-persist';
 import PkgConfig from 'vite-plugin-package-config';
+import { visualizer } from 'rollup-plugin-visualizer';
 
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+
+const plugins = [
+    vue(),
+    vueSetupExtend(),
+    injectHtml({
+        injectData: {
+            title: 'plm'
+        }
+    }),
+    PkgConfig(),
+    OptimizationPersist(),
+    AutoImport({
+        resolvers: [ElementPlusResolver()]
+    }),
+    Components({
+        resolvers: [ElementPlusResolver()]
+    })
+];
+if (process.env.npm_lifecycle_event === 'build:analyze') {
+    plugins.push(
+        visualizer({
+            emitFile: false,
+            filename: './analyze/analyze.html',
+            open: true
+        })
+    );
+}
 export default defineConfig(ConfigEnv => {
-    // console.log(ConfigEnv);{ mode: 'development', command: 'serve', ssrBuild: false }
     const env = loadEnv(ConfigEnv.mode, process.cwd()); // 获取.env.XXX文件
     const { mode } = ConfigEnv;
     return {
-        plugins: [
-            vue(),
-            vueSetupExtend(),
-            injectHtml({
-                injectData: {
-                    title: 'plm'
-                }
-            }),
-            PkgConfig(),
-            OptimizationPersist()
-        ],
+        plugins,
         root: process.cwd(), // html地址
         base: mode.command === 'serve' ? './' : env.VITE_PUBLIC_PATH, // base路径
         resolve: {
@@ -63,7 +83,8 @@ export default defineConfig(ConfigEnv => {
                     assetFileNames: `assets/[name].[hash].[ext]`, // 图片，css等其他资源
                     compact: true,
                     manualChunks: { // 抽出第三方包
-                        vue: ['vue', 'vue-router']
+                        vue: ['vue', 'vue-router', 'vuex'],
+                        ElementUi: ['element-plus']
                     }
                 }
             },

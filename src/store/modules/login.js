@@ -1,5 +1,6 @@
 const state = {
-    user: {}
+    user: {},
+    age: 11
 };
 const getters = {
     user: state => state.user

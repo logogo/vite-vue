@@ -1,8 +1,13 @@
 <script>
 import { defineComponent, ref, reactive, computed, toRefs, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 export default defineComponent({
     setup() {
+        throw new Error('33333');
+        console.log(3333333);
+        const route = useRoute();
+        const router = useRouter();
         const count = ref(0);
         const childRef = ref(null);
         const list = reactive([1, 2, 3]);
@@ -15,12 +20,15 @@ export default defineComponent({
         };
         onMounted(() => {
             console.log(childRef);
+            console.log('childRef');
         });
         setTimeout(() => {
             count.value = count.value + 1;
             list.push(5);
             json.name = 'li';
             json.picList.push(888888);
+            console.log(route);
+            console.log(router);
         }, 5000);
         const plusOne = computed(() => count.value + 1);
         return {
