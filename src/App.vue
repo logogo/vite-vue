@@ -4,8 +4,8 @@ import { useRoute, useRouter } from 'vue-router';
 
 export default defineComponent({
     setup() {
-        throw new Error('33333');
-        console.log(3333333);
+        // throw new Error('33333');
+        // console.log(3333333);
         const route = useRoute();
         const router = useRouter();
         const count = ref(0);

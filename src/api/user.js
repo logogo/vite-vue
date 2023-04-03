@@ -4,7 +4,7 @@ const user = {
     // 获取课程一级分类
     getUser() {
         return axios({
-            url: 'settings/general',
+            url: 'http://localhost:80/getData',
             method: 'get',
             params: {
                 name: '12'

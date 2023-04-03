@@ -1,12 +1,13 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: import.meta.env.VITE_API,
+    baseURL: '', //import.meta.env.VITE_API
     timeout: 30000
 });
 
 axios.defaults.timeout = 30000;
-
+axios.defaults.withCredentials = true;
+document.cookie = '2222222';
 instance.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 
 instance.interceptors.request.use(config => {
