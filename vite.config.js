@@ -42,12 +42,9 @@ if (process.env.npm_lifecycle_event === 'build:analyze') {
     );
 }
 export default defineConfig(ConfigEnv => {
-    const env = loadEnv(ConfigEnv.mode, process.cwd()); // 获取.env.XXX文件
-    const { mode } = ConfigEnv;
     return {
         plugins,
         root: process.cwd(), // html地址
-        //base: mode.command === 'serve' ? './' : env.VITE_PUBLIC_PATH, // base路径
         resolve: {
             alias: {
                 '@': fileURLToPath(new URL('./src', import.meta.url)) // @ 定向src

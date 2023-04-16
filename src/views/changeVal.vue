@@ -12,13 +12,13 @@ export default defineComponent({
             age: 12,
             sex: 'mal'
         });
-        onMounted(()=>{
+        const data1 = reactive({
+            name: '345345345'
+        });
+        onMounted(() => {
             console.log(data);
-            setTimeout(()=>{
-                Object.assign(data, {
-                    name: '444444444',
-                    sex: 'femal'
-                });
+            setTimeout(() => {
+                Object.assign(data, data1);
             }, 5000);
         });
         return {
