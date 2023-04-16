@@ -16,7 +16,6 @@ export default defineComponent({
             name: '345345345'
         });
         onMounted(() => {
-            console.log(data);
             setTimeout(() => {
                 Object.assign(data, data1);
             }, 5000);
