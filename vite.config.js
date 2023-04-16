@@ -19,7 +19,8 @@ const plugins = [
     vueSetupExtend(),
     injectHtml({
         injectData: {
-            title: 'plm'
+            title: 'plm',
+            base_url: './'
         }
     }),
     PkgConfig(),

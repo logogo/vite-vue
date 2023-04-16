@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import FormView from '../views/FormView.vue';
+import ChangeVal from '../views/changeVal.vue'
 
 const router = createRouter({
     base: '/',
@@ -15,6 +16,11 @@ const router = createRouter({
             path: '/form',
             name: 'form',
             component: FormView
+        },
+        {
+            path: '/changeVal',
+            name: 'changeVal',
+            component: ChangeVal
         }
     ]
 });
