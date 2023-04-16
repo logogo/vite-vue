@@ -46,7 +46,7 @@ export default defineConfig(ConfigEnv => {
     return {
         plugins,
         root: process.cwd(), // html地址
-        base: mode.command === 'serve' ? './' : env.VITE_PUBLIC_PATH, // base路径
+        //base: mode.command === 'serve' ? './' : env.VITE_PUBLIC_PATH, // base路径
         resolve: {
             alias: {
                 '@': fileURLToPath(new URL('./src', import.meta.url)) // @ 定向src

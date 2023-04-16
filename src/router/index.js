@@ -1,16 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-console.log(import.meta.env);
-console.log(1111111);
+import FormView from '../views/FormView.vue';
 
 const router = createRouter({
-    base: '/pc/',
+    base: '/',
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: '/',
+            path: '/home',
             name: 'home',
             component: HomeView
+        },
+        {
+            path: '/form',
+            name: 'form',
+            component: FormView
         }
     ]
 });
