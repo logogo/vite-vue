@@ -10,8 +10,7 @@
     "lint": "eslint --fix --ext .js,.vue src",
     "lint-style": "stylelint --fix src/**/*.{css,less}",
     "build:analyze": "vite build --mode production",
-    "prepare": "husky install && husky add .husky/pre-commit \"yarn run imgZip\"",
-    "imgZip": "node ./imgZip.js"
+    "prepare": "husky install && husky add .husky/pre-commit \"npx lint-staged\""
   },
   "dependencies": {
     "alife-logger": "^1.8.30",
@@ -58,12 +57,10 @@
     "src/**/*.vue": "eslint --fix",
     "src/**/*.less": "stylelint --fix",
     "src/**/*.{js,vue,jsx,tsx}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ],
     "src/**/,*.{css,less}": [
-      "stylelint --fix",
-      "git add"
+      "stylelint --fix"
     ]
   }
 }

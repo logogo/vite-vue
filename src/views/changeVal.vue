@@ -1,5 +1,5 @@
 <template>
-<div>{{ data.name }}</div>
+  <div>{{ data.name }}</div>
 </template>
 
 <script>
@@ -8,7 +8,7 @@ export default defineComponent({
     name: 'ChangVal',
     setup() {
         const data = reactive({
-            name: '1111',
+            name: '111111',
             age: 12,
             sex: 'mal'
         });
