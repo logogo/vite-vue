@@ -7,7 +7,7 @@ const user = {
             url: 'http://localhost:80/getData',
             method: 'get',
             params: {
-                name: '12'
+                name: '123'
             }
         });
     },
