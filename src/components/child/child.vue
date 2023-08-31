@@ -49,6 +49,8 @@ export default defineComponent({
     },
     emits: ['send'],
     setup(props, { emit }) {
+        console.log(props);
+        console.log(11111111111);
         const store = useStore();
         store.dispatch('login/setUserInfo', { name: 'li' });
         const json = store.state;
@@ -86,7 +88,7 @@ export default defineComponent({
             immediate: true,
             deep: true
         });
-        const change = ()=>{
+        const change = () => {
             alert('a');
         };
         return {

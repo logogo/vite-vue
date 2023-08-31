@@ -1,5 +1,8 @@
 <template>
-  <div>{{ data.name }}</div>
+  <div>
+    {{ data.name }}
+    <Exam :data="data" />
+  </div>
 </template>
 
 <script>
