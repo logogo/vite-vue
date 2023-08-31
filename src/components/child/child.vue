@@ -49,12 +49,9 @@ export default defineComponent({
     },
     emits: ['send'],
     setup(props, { emit }) {
-        console.log(props);
-        console.log(11111111111);
         const store = useStore();
         store.dispatch('login/setUserInfo', { name: 'li' });
         const json = store.state;
-        console.log(json);
         onMounted(() => {
             emit('send', 222);
             api.user.getUser().then(res => {
@@ -63,7 +60,6 @@ export default defineComponent({
         });
         setTimeout(() => {
             store.commit('login/SET_USER', { name: 'gao' });
-            console.log(55555);
         }, 4000);
         watch(() => props.title, (val) => {
             console.log(val);
@@ -92,7 +88,8 @@ export default defineComponent({
             alert('a');
         };
         return {
-            change
+            change,
+            json
         };
     }
 });
