@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "alife-logger": "^1.8.30",
-    "vue": "^3.2.45",
+    "pinia": "^2.1.6",
+    "vue": "3.3",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
@@ -49,8 +50,7 @@
     "vite-plugin-html": "2.0.2",
     "vite-plugin-optimize-persist": "^0.1.2",
     "vite-plugin-package-config": "^0.1.1",
-    "vite-plugin-vue-setup-extend": "^0.4.0",
-    "vuex": "^4.1.0"
+    "vite-plugin-vue-setup-extend": "^0.4.0"
   },
   "lint-staged": {
     "src/**/*.{js,vue,jsx,tsx}": [
