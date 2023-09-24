@@ -11,5 +11,9 @@ export const StoreA = defineStore('storeA', {
         };
     },
     getters: {},
-    actions: {}
+    actions: {
+        getJosn(state) {
+            console.log(this);
+        }
+    }
 });

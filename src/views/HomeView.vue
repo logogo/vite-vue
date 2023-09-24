@@ -7,7 +7,7 @@
   <div v-for="(item,key) in list" :key="key">
     {{ item }}
   </div>
-  <Child ref="childRef" :title="count" :list="list" :name="name" :pic-list="picList" :json-store="jsonStore" @send="getNum" />
+  <Child ref="childRef" :title="count" :list="list" :name="name" :pic-list="picList" @send="getNum" />
 </template>
 
 <script>
@@ -23,25 +23,19 @@ export default defineComponent({
         const list = reactive([1, 2, 3]);
         const json = reactive({
             name: 'gao',
-            picList: [3, 4, 5]
+            picList: [3, 4, 5],
+            store: null
         });
-        const jsonStore = ref({});
         onMounted(() => {
             storeA.$patch(state => {
                 state.piniaMsg = 'action juejin';
                 state.jsonStore.name = 'wang';
             });
-            jsonStore.value = storeToRefs(storeA).jsonStore;
+            json.store = storeToRefs(storeA).jsonStore.value;
         });
         const getNum = (num) => {
             // console.log(num);
         };
-        // setTimeout(() => {
-        //     count.value = count.value + 1;
-        //     list.push(5);
-        //     json.name = 'li';
-        //     json.picList.push(888888);
-        // }, 5000);
         const plusOne = computed(() => count.value + 1);
         return {
             childRef,
@@ -49,8 +43,7 @@ export default defineComponent({
             getNum,
             plusOne,
             list,
-            ...toRefs(json),
-            jsonStore
+            ...toRefs(json)
         };
     }
 });

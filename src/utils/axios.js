@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: '', //import.meta.env.VITE_API
+    baseURL: '', // import.meta.env.VITE_API
     timeout: 30000
 });
 
@@ -12,8 +12,8 @@ instance.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8
 
 instance.interceptors.request.use(config => {
     // 请求头把token带上
-    config.headers.timestamp = parseInt(+new Date() / 1000, 10);
     console.log(config);
+    config.headers.timestamp = parseInt(+new Date() / 1000, 10);
     return config;
 },
 error => {
