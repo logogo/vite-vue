@@ -1,10 +1,9 @@
 import { fileURLToPath, URL } from 'node:url';
 
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 import { injectHtml } from 'vite-plugin-html';
-import postcssImport from 'postcss-import';
 import autoprefixer from 'autoprefixer';
 import OptimizationPersist from 'vite-plugin-optimize-persist';
 import PkgConfig from 'vite-plugin-package-config';
@@ -63,12 +62,20 @@ export default defineConfig(ConfigEnv => {
                     charset: false
                 }
             },
-            postCss: {
+            postcss: { // ⚠️关键代码
                 plugins: [
-                    postcssImport, // @import
-                    autoprefixer // css3
+                    autoprefixer({
+                        overrideBrowserslist: [
+                            "Android 4.1",
+                            "iOS 7.1",
+                            "Chrome > 31",
+                            "ff > 31",
+                            "ie >= 8"
+                        ],
+                        grid: true
+                    })
                 ]
-            }
+            },
         },
         build: {
             outDir: 'dist',

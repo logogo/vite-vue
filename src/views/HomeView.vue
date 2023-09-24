@@ -7,6 +7,9 @@
   <div v-for="(item,key) in list" :key="key">
     {{ item }}
   </div>
+  <div class="unselector">
+    1111111111111111
+  </div>
   <Child ref="childRef" :title="count" :list="list" :name="name" :pic-list="picList" @send="getNum" />
 </template>
 
@@ -48,3 +51,10 @@ export default defineComponent({
     }
 });
 </script>
+
+<style scoped>
+    .unselector {
+        display: flex;
+        user-select: none;
+    }
+</style>
